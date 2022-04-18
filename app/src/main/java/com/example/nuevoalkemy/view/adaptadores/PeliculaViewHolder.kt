@@ -1,4 +1,4 @@
-package com.example.nuevoalkemy.view
+package com.example.nuevoalkemy.view.adaptadores
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView

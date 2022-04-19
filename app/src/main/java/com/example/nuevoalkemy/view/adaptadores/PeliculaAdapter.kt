@@ -19,7 +19,9 @@ class PeliculaAdapter(val listadoPelicula:List<Pelicula>):RecyclerView.Adapter<P
         with(holder){
             with(listadoPelicula[position]){
                 binding.tvTitulo.text = title
-                Glide.with(itemView.context).load(poster_path).into(binding.ivPortada)
+                Glide.with(itemView.context).load("https://image.tmdb.org/t/p/w500$poster_path").into(binding.ivPortada)
+
+//                Glide.with(itemView.context).load(poster_path).into(binding.ivPortada)
             }
         }
     }

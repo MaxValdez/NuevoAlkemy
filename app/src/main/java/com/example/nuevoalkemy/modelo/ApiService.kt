@@ -12,6 +12,9 @@ import retrofit2.http.Url
 
 interface ApiService {
     //@Headers("api_key: ${Constantes.API_KEY}")
-    @GET("movie/popular")
-   suspend fun traerPeliculas(): Call<ResultPelicula>
+//    @GET("movie/popular")
+//   suspend fun traerPeliculas(): Call<ResultPelicula>
+
+    @GET("/3/movie/popular")
+    suspend fun traerPeliculas(): Response<ResultPelicula>
 }

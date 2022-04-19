@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.nuevoalkemy.data.Constantes
 import com.example.nuevoalkemy.data.Pelicula
@@ -34,23 +35,29 @@ class MainActivity : AppCompatActivity() {
 
 }
     private fun obtenerPeliculas() {
-        GlobalScope.launch(Dispatchers.IO){
+        lifecycleScope.launch(Dispatchers.Main){
+            val listaPeliculas=getPopularMovies()
+            Log.d("tag", listaPeliculas.toString())
+            binding.rvListadoPeli.adapter = listaPeliculas?.let { PeliculaAdapter(listaPeliculas.results) }
+//        apiService.traerPeliculas().enqueue(object:Callback<ResultPelicula>{
+//            override fun onResponse(
+//                call: Call<ResultPelicula>,
+//                response: Response<ResultPelicula>
+//            ) {
+//                val listaPeliculas=response.body()!!.results
+//                binding.rvListadoPeli.adapter = PeliculaAdapter(listaPeliculas)
+//            }
+//
+//            override fun onFailure(call: Call<ResultPelicula>, t: Throwable) {
+//
+//            }
 
-        apiService.traerPeliculas().enqueue(object:Callback<ResultPelicula>{
-            override fun onResponse(
-                call: Call<ResultPelicula>,
-                response: Response<ResultPelicula>
-            ) {
-                val listaPeliculas=response.body()!!.results
-                binding.rvListadoPeli.adapter = PeliculaAdapter(listaPeliculas)
-            }
-
-            override fun onFailure(call: Call<ResultPelicula>, t: Throwable) {
-
-            }
-
-
+//            )}
         }
-        )}
+
+    }
+    private suspend fun getPopularMovies(): ResultPelicula = withContext(Dispatchers.IO) {
+        apiService.traerPeliculas().body()!!
+
     }
 }
